@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora Científica</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(45deg, #7d0421, #ad032b, #d60c1a, #f83719, #ffb820);
+      background-size: 300% 300%;
+      animation: gradient 8s ease infinite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .calculadora {
+      background-color: rgba(20, 20, 20, 0.9);
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      width: 320px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tela {
+      width: 90%;
+      height: 60px;
+      background: #000;
+      color: #fff;
+      font-size: 24px;
+      border: none;
+      border-radius: 8px;
+      margin: 15px auto;
+      text-align: right;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+
+    .botoes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+
+    button {
+      background-color: #2a2a2a;
+      color: #fff;
+      border: none;
+      font-size: 18px;
+      border-radius: 8px;
+      padding: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #444;
+      transform: scale(1.05);
+    }
+
+    .igual {
+      background-color: #ffb820;
+      color: #000;
+      font-weight: bold;
+    }
+
+    .igual:hover {
+      background-color: #ffd75a;
+    }
+
+    .funcao {
+      background-color: #ad032b;
+    }
+
+    .funcao:hover {
+      background-color: #d60c1a;
+    }
+
+    .assinatura {
+      color: rgb(0, 0, 0);
+      font-size: 14px;
+      margin-top: 20px;
+      text-align: center;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculadora">
+    <input type="text" id="tela" class="tela" readonly />
+    <div class="botoes">
+      <button class="funcao" onclick="limpar()">C</button>
+      <button class="funcao" onclick="apagar()">⌫</button>
+      <button class="funcao" onclick="inserir('(')">(</button>
+      <button class="funcao" onclick="inserir(')')">)</button>
+
+      <button onclick="inserir('7')">7</button>
+      <button onclick="inserir('8')">8</button>
+      <button onclick="inserir('9')">9</button>
+      <button onclick="inserir('/')">÷</button>
+
+      <button onclick="inserir('4')">4</button>
+      <button onclick="inserir('5')">5</button>
+      <button onclick="inserir('6')">6</button>
+      <button onclick="inserir('*')">×</button>
+
+      <button onclick="inserir('1')">1</button>
+      <button onclick="inserir('2')">2</button>
+      <button onclick="inserir('3')">3</button>
+      <button onclick="inserir('-')">−</button>
+
+      <button onclick="inserir('0')">0</button>
+      <button onclick="inserir('.')">.</button>
+      <button onclick="calcular()" class="igual">=</button>
+      <button onclick="inserir('+')">+</button>
+
+      <button onclick="funcao('Math.sin')">sin</button>
+      <button onclick="funcao('Math.cos')">cos</button>
+      <button onclick="funcao('Math.tan')">tan</button>
+      <button onclick="funcao('Math.sqrt')">√</button>
+
+      <button onclick="funcao('Math.log10')">log</button>
+      <button onclick="funcao('Math.pow')">xʸ</button>
+      <button onclick="inserir('**2')">x²</button>
+      <button onclick="inserir('%')">%</button>
+    </div>
+  </div>
+
+  <p class="assinatura">© Gabriel Borges. Todos os direitos reservados. • 2025</p>
+
+  <script>
+    const tela = document.getElementById("tela");
+
+    function inserir(valor) {
+      tela.value += valor;
+    }
+
+    function limpar() {
+      tela.value = "";
+    }
+
+    function apagar() {
+      tela.value = tela.value.slice(0, -1);
+    }
+
+    function funcao(func) {
+      if (func === 'Math.pow') {
+        tela.value += '**';
+      } else {
+        tela.value = func + '(' + tela.value + ')';
+        calcular();
+      }
+    }
+
+    function calcular() {
+      try {
+        tela.value = eval(tela.value);
+      } catch (e) {
+        tela.value = "Erro";
+      }
+    }
+  </script>
+</body>
+</html>
